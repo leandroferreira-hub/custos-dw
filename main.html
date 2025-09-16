@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Custos de Cloud Data Warehouse: AWS vs. GCP vs. Azure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E0E1DD;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .card {
+            background-color: #ffffff;
+        }
+        .text-main { color: #0D1B2A; }
+        .text-secondary { color: #415A77; }
+        .bg-header { background-color: #0D1B2A; }
+        .bg-card { background-color: #1B263B; }
+        .border-accent { border-color: #778DA9; }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #778DA9;
+            align-self: center;
+            margin: 0 1rem;
+        }
+    </style>
+</head>
+<body class="text-main">
+
+    <header class="bg-header text-white p-8 text-center shadow-lg">
+        <h1 class="text-4xl md:text-5xl font-bold">Cloud Data Warehouse Showdown</h1>
+        <p class="text-lg md:text-xl mt-2 text-gray-300">Análise de Custo: AWS vs. GCP vs. Azure para Pipeline Bitrix24 ➔ Power BI</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="pipeline" class="mb-12">
+            <div class="card rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-center mb-4">Visão Geral do Projeto</h2>
+                <p class="text-secondary text-center max-w-3xl mx-auto mb-6">
+                    O objetivo é construir um pipeline de dados eficiente para extrair informações do Bitrix24, processá-las e carregá-las em um Data Warehouse na nuvem. Os dados serão então visualizados no Power BI, com duas atualizações diárias para manter os dashboards sempre relevantes.
+                </p>
+                <div class="flex flex-col md:flex-row items-center justify-center flex-wrap">
+                    <div class="text-center p-4">
+                        <div class="text-4xl">🏢</div>
+                        <div class="font-bold mt-2">Bitrix24</div>
+                        <div class="text-sm text-secondary">Fonte de Dados</div>
+                    </div>
+                    <div class="flow-arrow hidden md:block">→</div>
+                    <div class="text-center p-4">
+                        <div class="text-4xl">⚙️</div>
+                        <div class="font-bold mt-2">ETL na Nuvem</div>
+                        <div class="text-sm text-secondary">Processamento</div>
+                    </div>
+                    <div class="flow-arrow hidden md:block">→</div>
+                    <div class="text-center p-4">
+                        <div class="text-4xl">💾</div>
+                        <div class="font-bold mt-2">Cloud Storage</div>
+                        <div class="text-sm text-secondary">Armazenamento</div>
+                    </div>
+                    <div class="flow-arrow hidden md:block">→</div>
+                    <div class="text-center p-4">
+                        <div class="text-4xl">📊</div>
+                        <div class="font-bold mt-2">Data Warehouse</div>
+                        <div class="text-sm text-secondary">Análise</div>
+                    </div>
+                     <div class="flow-arrow hidden md:block">→</div>
+                    <div class="text-center p-4">
+                        <div class="text-4xl">📈</div>
+                        <div class="font-bold mt-2">Power BI</div>
+                        <div class="text-sm text-secondary">Visualização</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Os Concorrentes: Pilha de Serviços</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card rounded-lg shadow-md p-6 text-center">
+                    <h3 class="text-2xl font-bold mb-4">AWS</h3>
+                    <ul class="text-left space-y-2 text-secondary">
+                        <li><span class="font-bold text-main">D. Warehouse:</span> Amazon Redshift Serverless</li>
+                        <li><span class="font-bold text-main">ETL:</span> AWS Glue</li>
+                        <li><span class="font-bold text-main">Storage:</span> Amazon S3</li>
+                    </ul>
+                </div>
+                <div class="card rounded-lg shadow-md p-6 text-center">
+                    <h3 class="text-2xl font-bold mb-4">Google Cloud</h3>
+                    <ul class="text-left space-y-2 text-secondary">
+                        <li><span class="font-bold text-main">D. Warehouse:</span> BigQuery On-Demand</li>
+                        <li><span class="font-bold text-main">ETL:</span> Cloud Dataflow</li>
+                        <li><span class="font-bold text-main">Storage:</span> Google Cloud Storage</li>
+                    </ul>
+                </div>
+                <div class="card rounded-lg shadow-md p-6 text-center">
+                    <h3 class="text-2xl font-bold mb-4">Microsoft Azure</h3>
+                    <ul class="text-left space-y-2 text-secondary">
+                        <li><span class="font-bold text-main">D. Warehouse:</span> Synapse Analytics Serverless</li>
+                        <li><span class="font-bold text-main">ETL:</span> Azure Data Factory</li>
+                        <li><span class="font-bold text-main">Storage:</span> Azure Blob Storage</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Tabela de Custos por Unidade</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 <div class="card rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4 text-center">Data Warehouse (Computação)</h3>
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs uppercase bg-gray-100">
+                            <tr><th scope="col" class="px-4 py-2">Provedor</th><th scope="col" class="px-4 py-2">Custo Aprox.</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><td class="px-4 py-2 font-medium">AWS Redshift</td><td class="px-4 py-2">$0.36 / RPU-hora</td></tr>
+                            <tr class="border-b"><td class="px-4 py-2 font-medium">GCP BigQuery</td><td class="px-4 py-2">$6.25 / TB Processado</td></tr>
+                            <tr><td class="px-4 py-2 font-medium">Azure Synapse</td><td class="px-4 py-2">$5.65 / TB Processado</td></tr>
+                        </tbody>
+                    </table>
+                 </div>
+                 <div class="card rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4 text-center">ETL (Processamento)</h3>
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs uppercase bg-gray-100">
+                            <tr><th scope="col" class="px-4 py-2">Provedor</th><th scope="col" class="px-4 py-2">Custo Aprox.</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><td class="px-4 py-2 font-medium">AWS Glue</td><td class="px-4 py-2">$0.44 / DPU-hora</td></tr>
+                            <tr class="border-b"><td class="px-4 py-2 font-medium">GCP Dataflow</td><td class="px-4 py-2">$0.06 / vCPU-hora</td></tr>
+                            <tr><td class="px-4 py-2 font-medium">Azure Data Factory</td><td class="px-4 py-2">$0.25 / vCore-hora</td></tr>
+                        </tbody>
+                    </table>
+                 </div>
+                 <div class="card rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4 text-center">Armazenamento</h3>
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs uppercase bg-gray-100">
+                            <tr><th scope="col" class="px-4 py-2">Provedor</th><th scope="col" class="px-4 py-2">Custo Aprox.</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><td class="px-4 py-2 font-medium">AWS S3</td><td class="px-4 py-2">$0.023 / GB-mês</td></tr>
+                            <tr class="border-b"><td class="px-4 py-2 font-medium">GCP Storage</td><td class="px-4 py-2">$0.020 / GB-mês</td></tr>
+                            <tr><td class="px-4 py-2 font-medium">Azure Blob</td><td class="px-4 py-2">$0.018 / GB-mês</td></tr>
+                        </tbody>
+                    </table>
+                 </div>
+            </div>
+            <p class="text-center text-xs text-secondary mt-4">Preços baseados na região us-east-1/Leste dos EUA e podem variar. Consulte a documentação oficial para valores exatos.</p>
+        </section>
+        
+        <section id="cost-estimation" class="mb-12">
+             <div class="card rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold text-center mb-2">Estimativa de Custo Mensal</h2>
+                <p class="text-secondary text-center max-w-3xl mx-auto mb-6">
+                    Para um cenário de pequeno a médio porte, simulamos os custos mensais. A simulação considera 2 jobs de ETL diários de 30 minutos, 200 GB de armazenamento médio e 1 TB de dados processados por mês no Data Warehouse para as consultas do Power BI.
+                </p>
+                <div class="chart-container">
+                    <canvas id="costChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="pros-cons" class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Análise Qualitativa: Prós e Contras</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card rounded-lg shadow-md p-6">
+                    <h3 class="text-2xl font-bold text-center mb-4">AWS</h3>
+                    <div class="border-t border-accent pt-4">
+                        <h4 class="font-bold text-green-600 mb-2">Prós</h4>
+                        <ul class="list-inside list-disc text-secondary space-y-1 text-sm">
+                            <li>Ecossistema mais maduro e abrangente.</li>
+                            <li>Grande comunidade e vasta documentação.</li>
+                            <li>Flexibilidade e grande variedade de serviços.</li>
+                        </ul>
+                    </div>
+                    <div class="border-t border-accent pt-4 mt-4">
+                        <h4 class="font-bold text-red-600 mb-2">Contras</h4>
+                        <ul class="list-inside list-disc text-secondary space-y-1 text-sm">
+                            <li>A integração com Power BI não é nativa.</li>
+                            <li>Pode se tornar complexo para gerenciar.</li>
+                            <li>Modelo de custo do Redshift menos direto.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card rounded-lg shadow-md p-6">
+                    <h3 class="text-2xl font-bold text-center mb-4">Google Cloud</h3>
+                    <div class="border-t border-accent pt-4">
+                        <h4 class="font-bold text-green-600 mb-2">Prós</h4>
+                        <ul class="list-inside list-disc text-secondary space-y-1 text-sm">
+                            <li>BigQuery é extremamente rápido e fácil de usar.</li>
+                            <li>Excelente sinergia com Google Workspace.</li>
+                            <li>Modelo de custo por TB processado é previsível.</li>
+                             <li>Custo-benefício muito agressivo.</li>
+                        </ul>
+                    </div>
+                    <div class="border-t border-accent pt-4 mt-4">
+                        <h4 class="font-bold text-red-600 mb-2">Contras</h4>
+                        <ul class="list-inside list-disc text-secondary space-y-1 text-sm">
+                            <li>Dataflow pode ter uma curva de aprendizado.</li>
+                            <li>Menor market share, menos profissionais.</li>
+                            <li>Integração com Power BI via conector.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card rounded-lg shadow-md p-6">
+                    <h3 class="text-2xl font-bold text-center mb-4">Microsoft Azure</h3>
+                    <div class="border-t border-accent pt-4">
+                        <h4 class="font-bold text-green-600 mb-2">Prós</h4>
+                        <ul class="list-inside list-disc text-secondary space-y-1 text-sm">
+                            <li>Integração nativa e perfeita com Power BI.</li>
+                            <li>Ecossistema unificado para empresas que já usam Microsoft.</li>
+                             <li>Serviços de dados bem integrados entre si.</li>
+                        </ul>
+                    </div>
+                    <div class="border-t border-accent pt-4 mt-4">
+                        <h4 class="font-bold text-red-600 mb-2">Contras</h4>
+                        <ul class="list-inside list-disc text-secondary space-y-1 text-sm">
+                            <li>Pode ser mais caro para ETL.</li>
+                             <li>A interface do Azure pode ser complexa.</li>
+                             <li>Menor sinergia com Google Workspace.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <div class="card rounded-lg shadow-md p-8">
+                <h2 class="text-3xl font-bold text-center mb-6">O Veredito: Qual Plataforma Escolher?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="border-l-4 border-blue-500 p-4 bg-blue-50 rounded">
+                        <h3 class="font-bold text-lg mb-2">Escolha Azure se...</h3>
+                        <p class="text-sm text-secondary">...sua prioridade máxima for a integração nativa com o <strong>Power BI</strong> e sua empresa já estiver consolidada no ecossistema Microsoft.</p>
+                    </div>
+                    <div class="border-l-4 border-green-500 p-4 bg-green-50 rounded">
+                        <h3 class="font-bold text-lg mb-2">Escolha GCP se...</h3>
+                        <p class="text-sm text-secondary">...você busca o melhor <strong>custo-benefício</strong>, performance de ponta com o BigQuery e precisa de integração com o <strong>Google Workspace</strong>.</p>
+                    </div>
+                    <div class="border-l-4 border-orange-500 p-4 bg-orange-50 rounded">
+                        <h3 class="font-bold text-lg mb-2">Escolha AWS se...</h3>
+                        <p class="text-sm text-secondary">...você precisa da <strong>máxima flexibilidade</strong> de um ecossistema maduro e planeja expandir o projeto com uma vasta gama de outros serviços.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="text-center p-6 text-sm text-secondary">
+        <p>&copy; 2024 Análise de Dados. Todos os direitos reservados.</p>
+        <p>Infográfico gerado para fins de comparação e estimativa.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('costChart').getContext('2d');
+        const costChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Google Cloud', 'Microsoft Azure', 'AWS'],
+                datasets: [{
+                    label: 'Custo Mensal Estimado (USD)',
+                    data: [12.23, 39.45, 41.00],
+                    backgroundColor: [
+                        '#415A77',
+                        '#1B263B',
+                        '#0D1B2A'
+                    ],
+                    borderColor: [
+                        '#778DA9',
+                        '#778DA9',
+                        '#778DA9'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Custo em USD ($)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                         callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
